@@ -5,9 +5,15 @@ import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick-theme.css';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HotCollections = (props) => {
+  const [loaded, setLoaded] = useState([false])
   const [hotFeatures, setHotFeatures] = useState([]);
   useEffect(() => {
     axios
@@ -16,16 +22,28 @@ const HotCollections = (props) => {
       )
       .then((res) => setHotFeatures(res.data))
       .catch((err) => console.log(err));
+      setTimeout(() => {
+        setLoaded(true)
+      },200);
   }, []);
+
+  const sliderRef = React.useRef(null);
+
+  const next = () => {
+    sliderRef.current.slickNext();
+  };
+
+  const previous = () => {
+    sliderRef.current.slickPrev();
+  };
 
 
   const settings = {
-    dots: true,
     lazyLoad: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 4,
+    slidesToScroll: 2,
     responsive: [
       {
         breakpoint: 768,
@@ -54,12 +72,14 @@ const HotCollections = (props) => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <Slider {...settings}>
+          {loaded ? (
+          <div className="slide_section">
+          <Slider ref={sliderRef} {...settings}>
           {hotFeatures.map((feature, index) => (
             <div
-                className="col-lg-12 col-md-6 col-sm-6 col-xs-12 edit"
-                key={index}
-              >
+            className="col-lg-12 col-md-6 col-sm-6 col-xs-12 edit"
+            key={index}
+            >
                 <div className="nft_coll">
                   <div className="nft_wrap">
                     <Link to={`/item-details/${feature.nftId}`}>
@@ -70,8 +90,8 @@ const HotCollections = (props) => {
                       />
                     </Link>
                   </div>
-                  <div className="nft_coll_pp">
-                    <Link to="/author">
+                  <div className="nft_coll_pp ">
+                    <Link to={`/author/${feature.authorId}`}>
                       <img
                         className="lazy pp-coll"
                         src={feature.authorImage}
@@ -84,13 +104,28 @@ const HotCollections = (props) => {
                     <Link to="/explore">
                       <h4>{feature.title}</h4>
                     </Link>
-                    <span>ERC- {feature.code}</span>
+                    <span >ERC- {feature.code}</span>
                   </div>
                 </div>
               </div>
           ))}
-       
           </Slider>
+          <button className="slider-prev-btn slider-btn" onClick={previous}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <button className="slider-next-btn slider-btn" onClick={next}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
+          ) : (
+            <>
+            <div className="nft_coll skeleton"></div>
+            <div className="lazy img-fluid skeleton"></div>
+            <div className="lazy pp-coll skeleton"></div>
+            <div  className="skeleton skeleton-text"></div>
+            <div className="skeleton skeleton-text"></div>
+            </>
+          )}
         </div>
       </div>
     </section>
