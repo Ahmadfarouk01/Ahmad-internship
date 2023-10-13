@@ -12,28 +12,3 @@
 @import "./css/styles/coloring.css";
 
 
-.skeleton{
-    width: 100%;
-    height: 250px;
-    background-color: rgb(53, 51, 51);
-}
-
-
-.yes{
-    font-size: 5rem;
-}
-
-.img-skeleton {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  .name-skeleton {
-    width: 60%;
-    margin-bottom: 4px;
-  }
-  
-  .price-skeleton {
-    width: 40%;
-  }
