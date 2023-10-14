@@ -1,26 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
-
-import { Suspense } from "react";
 
 const TopSellers = () => {
   const [sellers, setsellers] = useState([]);
-  const url =
-    "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers";
-
-  useEffect(() => {
-    async function renderData(){
-      setTimeout(() => {
-        axios
-        .get(url)
-        .then((res) => setsellers(res.data))
-        .catch((err) => console.log(err));
-      }, 200);
-    }
-      renderData();
-  }, [url]);
+  const [loading, setLoading] = useState(false);
+    const skeletonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    
+    useEffect(() => {
+        setTimeout(() => {
+          axios
+          .get("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers")
+          .then((res) => setsellers(res.data))
+          .catch((err) => console.log(err));
+          setLoading(true)
+        }, 100);
+      }, []);
   return (
     <section id="section-popular" className="pb-5">
       <div className="container">
@@ -28,34 +23,57 @@ const TopSellers = () => {
           <div className="col-lg-12">
             <div className="text-center">
               <h2>Top Sellers</h2>
-              
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
           <div className="col-md-12">
             <ol className="author_list">
               <>
-              {sellers.map((seller, index) => (
-                <Suspense fallback={<p>laosin..</p>} className="yes">
+              {loading ? (
+                <>
+                {sellers.map((seller, index) => (
                 <li key={index}>
                   <div className="author_list_pp">
-                    <Link to="/author">
+                    <Link to={`/author/${seller.authorId}`}>
                       <img
                         className="lazy pp-author"
-                        src={seller.authorImage}
+                        src={seller.authorImage }
                         alt=""
                       />
-
                       <i className="fa fa-check"></i>
                     </Link>
                   </div>
                   <div className="author_list_info">
-                    <Link to="/author">{seller.authorName}</Link>
+                    <Link to={`/author/${seller.authorId}`}>{seller.authorName}</Link>
                     <span>{seller.price} ETH</span>
                   </div>
                 </li>
-                </Suspense>
                 ))}
+                </>
+              ) : (
+                <>
+                {skeletonList.map((__, index) => (
+                    <li key={index}>
+                      <div className="author_list_pp">
+                        <span>
+                          <div
+                            className="lazy pp-author skeleton-img skeleton"
+                            alt=""></div>
+                          <i className="fa fa-check"></i>
+                        </span>
+                      </div>
+                      <div className="author_list_info">
+                        <span className="skeleton skeleton-text">
+                        </span>
+                        <span className="skeleton skeleton-text">
+                        </span>
+                      </div>
+                    </li>
+                  ))} 
+                </>
+                 
+              )
+              }
                 </>
             </ol>
           </div>

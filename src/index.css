@@ -46,10 +46,11 @@
   }
 
 
-  .skeleton-nft-img {
+  .skeleton-img {
     width: 100%;
-    background-color: rgb(162, 27, 27);
+    height: 50px;
     margin-bottom: 8px;
+    border-radius: 50%;
   }
   
   .skeleton {
@@ -61,4 +62,3 @@
     height: 21px;
     width: 100%;
   }
-  
