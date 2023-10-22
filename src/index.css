@@ -12,6 +12,15 @@
 @import "./css/styles/coloring.css";
 
 
+
+.skeleton-img {
+  width: 20%;
+  height: 50px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+}
+
+
 .body{
   display: flex;
 }
@@ -37,12 +46,70 @@
   border-radius: 10px;
 }
 
+
 .skeleton {
   background-color: rgb(227, 227, 227) !important;
   margin-bottom: 8px;
 }
 
 .skeleton-text {
+
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton-nft-img{
+  height: 230px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.skeleton-author-img{
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+}
+
+.skeleton-timer{
+  height: 30px;
+  width: 50%;
+}
+
+.skeleton-price{
+  height: 16px;
+  width: 60%;
+}
+
+.liked-color{
+  color: red;
+}
+
+.author--skeleton-body{
+  display: flex;
+  
+}
+
+.skeleton-autor__text{
+  margin-top: 30px;
+  margin-left: 20px;
+  width: 200px;
+  height: 13px;
+}
+
+.skeleton-autor__text--link{
+  margin-top: 30px;
+  margin-left: 20px;
+  width: 150px;
+  height: 13px;
+}
+
+.skeleton-autor__text--id{
+  margin-top: 30px;
+  margin-left: 20px;
+  width: 250px;
+  height: 13px;
+}
+
   height: 15px;
   width: 160px;
 }
@@ -84,7 +151,7 @@
 .slider-prev-btn {
   left: 8px;
 }
-=======
+
 .slide_section{
     position: relative;
 }
@@ -136,3 +203,4 @@
     height: 21px;
     width: 100%;
   }
+

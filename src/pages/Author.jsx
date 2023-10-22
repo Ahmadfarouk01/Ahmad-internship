@@ -1,10 +1,29 @@
 import React from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Author = () => {
+  const [items, setItems] = useState([]);
+  const [followed, setFollow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const skeletonList = [1];
+  const params = useParams();
+
+  useEffect(() => {
+    setTimeout(() => {
+      axios
+        .get(
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${params.id}`
+        )
+        .then((res) => setItems(res.data))
+        .catch((err) => console.log(err));
+      setLoading(true);
+    }, 100);
+  }, []);
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -25,29 +44,74 @@ const Author = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
-
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
-                          <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
-                      </div>
+                      <>
+                        {loading ? (
+                          <>
+                            <img src={items.authorImage} alt="" />
+                            <i className="fa fa-check"></i>
+                            <div className="profile_name">
+                              <h4>
+                                {items.authorName}
+                                <span className="profile_username">
+                                  @{items.tag}
+                                </span>
+                                <span id="wallet" className="profile_wallet">
+                                  {items.address}
+                                </span>
+                                <button id="btn_copy" title="Copy Text">
+                                  Copy
+                                </button>
+                              </h4>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {skeletonList.map((__, index) => (
+                              <li>
+                                <div className="author--skeleton-body">
+                                <span className="skeleton skeleton-author-img"></span>
+                                <div>
+                                <div className=" skeleton skeleton-autor__text"></div>
+                                    <span className="profile_username skeleton skeleton-autor__text--link"></span>
+                                    <span className="profile_username skeleton skeleton-autor__text--id"></span>
+                                </div>
+                                      </div>
+                              </li>
+                            ))}
+                          </>
+                        )}
+                      </>
                     </div>
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      {!followed ? (
+                        <>
+                          <div className="profile_follower">
+                            {items.followers} followers
+                          </div>
+                          <button
+                            to="#"
+                            className="btn-main"
+                            onClick={() => setFollow(true)}
+                          >
+                            Follow
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <div className="profile_follower">
+                            {items.followers + 1} followers
+                          </div>
+                          <button
+                            to="#"
+                            className="btn-main"
+                            onClick={() => setFollow(false)}
+                          >
+                            Unfollow
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -55,7 +119,11 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  {items && (
+                    <div className="de_tab tab_simple">
+                      <AuthorItems authorId={items.id} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
