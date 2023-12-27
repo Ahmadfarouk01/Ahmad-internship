@@ -17,7 +17,7 @@ const AuthorItems = () => {
         )
         .then((data) => setItems(data.data.nftCollection))
         .catch((err) => console.log(err));
-    },);
+    },1000);
   }, []);
 
   return (

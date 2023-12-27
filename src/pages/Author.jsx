@@ -22,7 +22,7 @@ const Author = () => {
         .then((res) => setItems(res.data))
         .catch((err) => console.log(err));
       setLoading(true);
-    }, );
+    }, 1000);
   }, []);
   return (
     <div id="wrapper">

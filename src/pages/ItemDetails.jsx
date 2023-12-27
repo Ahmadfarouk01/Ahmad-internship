@@ -17,7 +17,7 @@ const ItemDetails = () => {
         .then((res) => setItemDetails(res.data))
         .catch((err) => console.log(err));
       setLoading(true);
-    },);  
+    },1000);  
   }, []);
 
   return (
