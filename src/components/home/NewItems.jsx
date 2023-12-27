@@ -32,7 +32,7 @@ const NewItems = () => {
         .then((res) => setItems(res.data))
         .catch((err) => console.log(err));
       setLoading(true);
-    }, 200);
+    }, );
    
   }, []);
 

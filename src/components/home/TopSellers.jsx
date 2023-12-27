@@ -14,7 +14,7 @@ const TopSellers = () => {
           .then((res) => setsellers(res.data))
           .catch((err) => console.log(err));
           setLoading(true)
-        }, 100);
+        }, );
       }, []);
   return (
     <section id="section-popular" className="pb-5">

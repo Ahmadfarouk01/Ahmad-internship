@@ -24,7 +24,7 @@ const HotCollections = (props) => {
       .catch((err) => console.log(err));
       setTimeout(() => {
         setLoaded(true)
-      },200);
+      },);
   }, []);
 
   const sliderRef = React.useRef(null);
