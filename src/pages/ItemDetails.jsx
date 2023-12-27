@@ -17,7 +17,7 @@ const ItemDetails = () => {
         .then((res) => setItemDetails(res.data))
         .catch((err) => console.log(err));
       setLoading(true);
-    },);
+    },);  
   }, []);
 
   return (
@@ -78,7 +78,7 @@ const ItemDetails = () => {
                           <h6>Creator</h6>
                           <div className="item_author">
                             <div className="author_list_pp">
-                              <Link to={`/author/${details.ownerId}`}>
+                              <Link to={`/author/${details.creatorId}`}>
                                 <img
                                   className="lazy"
                                   src={details.creatorImage}
@@ -88,7 +88,7 @@ const ItemDetails = () => {
                               </Link>
                             </div>
                             <div className="author_list_info">
-                              <Link to={`/author/${details.ownerId}`}>
+                              <Link to={`/author/${details.creatorId  }`}>
                                 {details.creatorName}
                               </Link>
                             </div>
