@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 const Count = (props) => {
   const [countdown, setCountdown] = useState( Math.floor(props.items.expiryDate - Date.now()));
-
  
   useEffect(() => {
     setTimeout(() => {
